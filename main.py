@@ -20,7 +20,7 @@ def readFile(file):
     return data
 
 def writeFile(data, file):
-    f = open(file,'w')
+    f = open(file,'wb')
     for item in data:
         f.write(item)
     f.close()
@@ -42,6 +42,13 @@ class day():
         self.codeRed = 0
         self.voltage = 0
         self.regular = 0
+    def tostring(self):
+        bigboi = ""
+        bigboi += self.date + ";"
+        bigboi += str(self.codeRed) + ";"
+        bigboi += str(self.voltage) + ";"
+        bigboi += str(self.regular) 
+        return bigboi
         
     def add(self,x):
         if x == "1":
@@ -67,7 +74,6 @@ while legit:
 
 try:
     days = readFile("diabetes.dat")
-    print(day)
 except Exception as e:
     print(e)
     days = []
@@ -84,7 +90,11 @@ for day in days:
 if flag:
     day = day()
     day.add(a)
+    print(day.tostring())
     #days.append(newDay)
 
-
-writeFile(days,"diabetes.dat")
+someboi = []
+for some in someboi:
+    someboi.append(some.tostring())
+    
+writeFile(someboi,"diabetes.dat")

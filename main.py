@@ -1,6 +1,4 @@
-<<<<<<< HEAD
-'''hi'''
-=======
+
 '''
 Diabetes tracker by raiz and goose
 
@@ -90,4 +88,3 @@ if flag:
 
 
 writeFile(days,"diabetes.dat")
->>>>>>> 7337a1155e0222504513d3dfc6d7fa4ae196e935

@@ -4,7 +4,7 @@ Diabetes tracker by raiz and goose
 
 Disclaimer - does not actually track diabetes
 
-v1.0
+v1.1
 '''
 
 from datetime import date
@@ -16,11 +16,11 @@ def readFile(file):
     data = []
     file = open(file,'r')
     for item in file:
-        data.append(item)
+        data.append(day(item))
     return data
 
 def writeFile(data, file):
-    f = open(file,'wb')
+    f = open(file,'w')
     for item in data:
         f.write(item)
     f.close()
@@ -36,18 +36,24 @@ def maketime():
 time = maketime()
 
 class day():
-    def __init__(self):
+    def __init__(self,men):
         self.date = maketime()
 
         self.codeRed = 0
         self.voltage = 0
         self.regular = 0
+        if len(men) >0:
+            bloke = men.split(";")
+            self.date = bloke[0]
+            self.codeRed = int(bloke[1])
+            self.voltage = int(bloke[2])
+            self.regular = int(bloke[3])
     def tostring(self):
         bigboi = ""
-        bigboi += self.date + ";"
-        bigboi += str(self.codeRed) + ";"
-        bigboi += str(self.voltage) + ";"
-        bigboi += str(self.regular) 
+        bigboi += self.date + ","
+        bigboi += str(self.codeRed) + ","
+        bigboi += str(self.voltage) + ","
+        bigboi += str(self.regular) + "\n"
         return bigboi
         
     def add(self,x):
@@ -55,46 +61,53 @@ class day():
             self.codeRed += 1
         elif x == "2":
             self.voltage += 1
-        else:
+        elif x == "3":
             self.regular += 1
 
 print("1: Code red\n2: Voltage\n3: Regular")
-
-legit = True
-while legit:
-    
-    a = input(">")
-    
-    if a == "1" or a == "2" or a == "3":
-        legit = False
-        break
-    
-    print("stupid")
-
 
 try:
     days = readFile("diabetes.dat")
 except Exception as e:
     print(e)
     days = []
-    print("no file found")
+    #print("no file found")
 
-flag = True
+running = True
+while running:
+    legit = True
+    while legit:
+        
+        a = input(">")
+        
+        if a == "1" or a == "2" or a == "3":
+            legit = False
+            break
+        elif a == "save":
+            running = False
+            legit = False
+            break
+        
+        print("stupid")
 
-for day in days:
-    if day.date == time:
-        flag = False
-        day.add(a)
+    flag = True
+
+    for d in days:
+        if d.date == time:
+            flag = False
+            d.add(a)
 
 
-if flag:
-    day = day()
-    day.add(a)
-    print(day.tostring())
-    #days.append(newDay)
+    if flag:
+        newday = day("")
+        newday.add(a)
+        #print(newday.tostring())
+        days.append(newday)
 
 someboi = []
-for some in someboi:
+for some in days:
     someboi.append(some.tostring())
+
+print(someboi)
     
 writeFile(someboi,"diabetes.dat")
